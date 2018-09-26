@@ -11,19 +11,13 @@
     "x": {"aggregate": "sum", 
           "field": "Amount", 
           "type": "quantitative" ,
-          "axis": {"title": "Amount"},
-          "nice" : "true",
-          "fill": {"value": "#fff"}         
+          "axis": {"title": "Amount"}
           },
-    "y": { "field": "Damage_Descp",             
-            "type": "nominal",
-            "sort": {"op": "sum", "field":"Amount"},
-            "axis": {"title": "Damage Type"},
-            "nice" : "true",
-            "fill": {"value": "#fff"}
-            }
-
-            
+    "y": {"field": "Damage_Descp",             
+          "type": "nominal",
+          "sort": {"op": "sum", "field":"Amount"},
+          "axis": {"title": "Damage Type"}
+          }
   },
   "config": {} 
 }
