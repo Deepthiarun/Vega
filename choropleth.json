@@ -1,0 +1,114 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v4.json",
+  "width": 960,
+  "height": 500,
+  "autosize": "none",
+  "data": [
+    {
+      "name": "losses",
+      "url": "https://raw.githubusercontent.com/Deepthiarun/Vega/master/losses2015.csv",
+      "format": {
+        "type": "csv",
+        "parse": "auto"
+      },
+      "transform": [
+        {
+          "type": "aggregate",
+          "fields": [
+            "Amount"
+          ],
+          "ops": [
+            "sum"
+          ],
+          "as": [
+            "SumAmount"
+          ],
+          "groupby": [
+            "State_Code"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "states",
+      "url": "https://raw.githubusercontent.com/Deepthiarun/Vega/master/us-10m.json",
+      "format": {
+        "type": "topojson",
+        "feature": "states"
+      },
+      "transform": [
+        {
+          "type": "lookup",
+          "from": "losses",
+          "key": "State_Code",
+          "fields": [
+            "id"
+          ],
+          "values": [
+            "SumAmount"
+          ]
+        }
+      ]
+    }
+  ],
+  "projections": [
+    {
+      "name": "projection",
+      "type": "albersUsa"
+    }
+  ],
+  "scales": [
+    {
+      "name": "color",
+      "type": "quantize",
+      "domain": [
+        100000,
+        500000000
+      ],
+      "range": {
+        "scheme": "blues",
+        "count": 10
+      }
+    }
+  ],
+  "legends": [
+    {
+      "fill": "color",
+      "orient": "bottom-left",
+      "title": "Losses",
+      "format": "1.00"
+    }
+  ],
+  "marks": [
+    {
+      "type": "shape",
+      "from": {
+        "data": "states"
+      },
+      "encode": {
+        "enter": {
+          "tooltip": {
+            "signal": "datum.SumAmount"
+          }
+        },
+        "update": {
+          "fill": {
+            "scale": "color",
+            "field": "SumAmount"
+          }
+        },
+        "hover": {
+          "fill": {
+            "value": "red"
+          }
+        }
+      },
+      "transform": [
+        {
+          "type": "geoshape",
+          "projection": "projection"
+        }
+      ]
+    }
+  ]
+}

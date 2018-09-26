@@ -1,0 +1,30 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+  "width": 500,
+  "height": 500,
+  "padding": {"top": 10, "left": 30, "bottom": 30, "right": 10},
+  "title": "Agricultural Losses 2015",
+  "data": {"name":"losses",
+            "url": "https://raw.githubusercontent.com/Deepthiarun/Vega/master/losses2015.csv", 
+            "format": {"type": "csv"}},
+  "mark": "bar",
+  "encoding": {
+    "x": {"aggregate": "sum", 
+          "field": "Amount", 
+          "type": "quantitative" ,
+          "axis": {"title": "Amount"},
+          "nice" : "true",
+          "fill": {"value": "#fff"}         
+          },
+    "y": { "field": "Damage_Descp",             
+            "type": "nominal",
+            "sort": {"op": "sum", "field":"Amount"},
+            "axis": {"title": "Damage Type"},
+            "nice" : "true",
+            "fill": {"value": "#fff"}
+            }
+
+            
+  },
+  "config": {} 
+}
